@@ -1,3 +1,6 @@
+/* ==========================================================================
+   1. GLOBAL RESET & BASE STYLES
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -12,10 +15,11 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow: hidden;
+    background: #e0e0e0;
 }
 
 /* ==========================================================================
-   THEME 1: Light Minimal Base (Default)
+   2. THEME 1: LIGHT MINIMAL BASE (PC DEFAULTS - 380px)
    ========================================================================== */
 .clock-container {
     width: 100%;
@@ -50,7 +54,7 @@ body {
     align-items: center;
 }
 
-/* Hands Base Logic */
+/* Hands System Base */
 .hand {
     position: absolute;
     bottom: 50%;
@@ -90,7 +94,7 @@ body {
     z-index: 10;
 }
 
-/* Elements Hidden by Default in Theme 1 */
+/* Container Hidden Elements by Default */
 .numbers-container, .ticks-container, .bottom-dial {
     position: absolute;
     width: 100%;
@@ -99,35 +103,22 @@ body {
     opacity: 0;
 }
 
-/* Minimal 4-ticks markers for Theme 1 */
-.clock::before {
-    content: '';
+/* PC Ticks Transform Origin (380px / 2 = 190px) */
+.tick {
     position: absolute;
-    width: 92%;
-    height: 92%;
-    border-radius: 50%;
+    width: 2px;
+    height: 6px;
+    background: #888;
+    left: 50%;
+    transform-origin: 0 190px;
 }
 
-/* ==========================================================================
-   THEME 2: Light Full Details
-   ========================================================================== */
-.clock-container.theme-2 {
-    background: #eef2f3;
+.tick.major {
+    height: 10px;
+    width: 2px;
+    background: #333;
 }
 
-.clock-container.theme-2 .clock {
-    background: #eef2f3;
-    box-shadow: 12px 12px 24px #cbd0d2, 
-                -12px -12px 24px #ffffff;
-}
-
-.clock-container.theme-2 .numbers-container,
-.clock-container.theme-2 .ticks-container,
-.clock-container.theme-2 .bottom-dial {
-    opacity: 1;
-}
-
-/* Dial details custom text placement */
 .num {
     position: absolute;
     width: 100%;
@@ -139,21 +130,7 @@ body {
     padding: 24px;
 }
 
-.tick {
-    position: absolute;
-    width: 2px;
-    height: 6px;
-    background: #888;
-    left: 50%;
-    transform-origin: 0 190px;
-}
-.tick.major {
-    height: 10px;
-    width: 2px;
-    background: #333;
-}
-
-/* Bottom play dial logic */
+/* Bottom play dial */
 .bottom-dial {
     position: absolute;
     bottom: 12%;
@@ -179,7 +156,26 @@ body {
 }
 
 /* ==========================================================================
-   THEME 3: Dark Mode Full Details
+   3. THEME 2: LIGHT FULL DETAILS (ACTIVE STATE)
+   ========================================================================== */
+.clock-container.theme-2 {
+    background: #eef2f3;
+}
+
+.clock-container.theme-2 .clock {
+    background: #eef2f3;
+    box-shadow: 12px 12px 24px #cbd0d2, 
+                -12px -12px 24px #ffffff;
+}
+
+.clock-container.theme-2 .numbers-container,
+.clock-container.theme-2 .ticks-container,
+.clock-container.theme-2 .bottom-dial {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   4. THEME 3: DARK MODE FULL DETAILS (ACTIVE STATE)
    ========================================================================== */
 .clock-container.theme-3 {
     background: #232323;
@@ -196,6 +192,12 @@ body {
                 -15px -15px 30px #313131;
 }
 
+.clock-container.theme-3 .numbers-container,
+.clock-container.theme-3 .ticks-container,
+.clock-container.theme-3 .bottom-dial {
+    opacity: 1;
+}
+
 .clock-container.theme-3 .num {
     color: #8a8a8a;
 }
@@ -203,6 +205,7 @@ body {
 .clock-container.theme-3 .tick {
     background: #555;
 }
+
 .clock-container.theme-3 .tick.major {
     background: #888;
 }
@@ -227,4 +230,91 @@ body {
     background: #181818;
     box-shadow: inset 4px 4px 8px #0d0d0d, 
                 inset -4px -4px 8px #232323;
+}
+
+
+/* ==========================================================================
+   5. MOBILE & TABLET OPTIMIZATION (MAX-WIDTH: 450px)
+   ========================================================================== */
+@media (max-width: 450px) {
+    .clock {
+        width: 280px;
+        height: 280px;
+        box-shadow: 12px 12px 20px #bebebe, 
+                    -12px -12px 20px #ffffff;
+    }
+
+    /* Active Theme modifications for small screens */
+    .clock-container.theme-2 .clock {
+        box-shadow: 8px 8px 16px #cbd0d2, 
+                    -8px -8px 16px #ffffff;
+    }
+
+    .clock-container.theme-3 .clock {
+        box-shadow: 10px 10px 20px #151515, 
+                    -10px -10px 20px #313131;
+    }
+
+    .clock-title {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    /* Hands scaling mathematically down to fit 280px */
+    .hour-hand {
+        width: 5px;
+        height: 52px;
+    }
+
+    .min-hand {
+        width: 3px;
+        height: 78px;
+    }
+
+    .sec-hand {
+        width: 1.5px;
+        height: 92px;
+    }
+
+    .center-pin {
+        width: 10px;
+        height: 10px;
+    }
+
+    /* Crucial: Recalculate Ticks Origin for Mobile (280px / 2 = 140px) */
+    .tick {
+        transform-origin: 0 140px;
+        height: 5px;
+    }
+    
+    .tick.major {
+        height: 8px;
+    }
+
+    .num {
+        padding: 14px;
+        font-size: 0.78rem;
+    }
+
+    /* Bottom dynamic dial scaling */
+    .bottom-dial {
+        width: 68px;
+        height: 68px;
+        bottom: 10%;
+        box-shadow: inset 3px 3px 6px #525556, 
+                    inset -3px -3px 6px #94999c;
+    }
+
+    .clock-container.theme-3 .bottom-dial {
+        box-shadow: inset 3px 3px 6px #0d0d0d, 
+                    inset -3px -3px 6px #232323;
+    }
+
+    .play-icon {
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 12px solid #fff;
+        margin-left: 3px;
+    }
 }
